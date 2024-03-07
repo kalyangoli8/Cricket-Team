@@ -42,8 +42,8 @@ app.get('/players/', async (request, response) => {
     SELECT
     *
     FROM
-    cricke_team;`
-  const playersArray = await datebase.all(getPlayersQuery)
+    cricket_team;`
+  const playersArray = await database.all(getPlayersQuery)
   response.send(
     playersArray.map(eachPlayer => convertDbObjectToResponseObject(eachPlayer)),
   )
@@ -59,7 +59,7 @@ app.get('/players/:playerId/', async (request, response) => {
     WHERE
     player_id = ${playerId}`
   const player = await database.get(getPlayerQuery)
-  response.send(converDbObjectToResponseObject(player))
+  response.send(convertDbObjectToResponseObject(player))
 })
 
 app.post('/players/'),
@@ -76,7 +76,7 @@ app.post('/players/'),
 
 app.put('/players/:playerId/', async (request, response) => {
   const {playerName, jerseyNumber, role} = request.body
-  const {PlayerId} = request.params
+  const {playerId} = request.params
   const updatePlayerQuery = `
     UPDATE
     cricket_team
@@ -88,7 +88,7 @@ app.put('/players/:playerId/', async (request, response) => {
     player_Id = ${playerId};`
 
   await database.run(updatePlayerQuery)
-  response.send('Player Details Update')
+  response.send('Player Details Updated')
 })
 
 app.delete('/players/:playerId/', async (request, response) => {
